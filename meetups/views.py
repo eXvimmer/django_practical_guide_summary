@@ -1,5 +1,5 @@
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Meetup
 from .forms import RegistrationForm
 
@@ -19,7 +19,7 @@ def meetup_details(request: HttpRequest, slug: str):
             if registration_form.is_valid():
                 participant = registration_form.save()
                 selected_meetup.participants.add(participant)
-                # TODO: redirecto to registration confirmation page
+                return redirect("meetups:confirm-registration")
 
         return render(
             request,
@@ -38,3 +38,7 @@ def meetup_details(request: HttpRequest, slug: str):
                 "meetup_found": False,
             },
         )
+
+
+def confirm_registration(request: HttpRequest):
+    return render(request, "meetups/registration-success.html")
