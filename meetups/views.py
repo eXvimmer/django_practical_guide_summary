@@ -1,6 +1,6 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.shortcuts import render
 
 
 def index(request: HttpRequest):
-    return HttpResponse("Hello World")
+    return render(request, "meetups/index.html")
