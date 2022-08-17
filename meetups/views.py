@@ -22,7 +22,7 @@ def meetup_details(request: HttpRequest, slug: str):
         request,
         "meetups/meetup-detail.html",
         {
-            "meetup-title": selected_meetup["title"],
-            "meetup-description": selected_meetup["description"],
+            "meetup_title": selected_meetup["title"],
+            "meetup_description": selected_meetup["description"],
         },
     )
