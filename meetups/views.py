@@ -21,7 +21,7 @@ def meetup_details(request: HttpRequest, slug: str):
                 # NOTE: the second return value for get_or_create is "was_created" boolean
                 participant, _ = Participant.objects.get_or_create(email=user_email)  # type: ignore
                 selected_meetup.participants.add(participant)
-                return redirect("meetups:confirm-registration")
+                return redirect("meetups:confirm-registration", slug=slug)
 
         return render(
             request,
@@ -42,5 +42,10 @@ def meetup_details(request: HttpRequest, slug: str):
         )
 
 
-def confirm_registration(request: HttpRequest):
-    return render(request, "meetups/registration-success.html")
+def confirm_registration(request: HttpRequest, slug: str):
+    meetup = Meetup.objects.get(slug=slug)  # type: ignore
+    return render(
+        request,
+        "meetups/registration-success.html",
+        {"organizer_email": meetup.organizer_email},
+    )
