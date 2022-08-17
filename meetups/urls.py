@@ -4,11 +4,11 @@ from . import views
 app_name = "meetups"
 
 urlpatterns = [
-    path("meetups/", views.index, name="all-meetups"),
+    path("", views.index, name="all-meetups"),
     path(
-        "meetups/<slug:slug>/success",
+        "<slug:slug>/success",
         views.confirm_registration,
         name="confirm-registration",
     ),
-    path("meetups/<slug:slug>", views.meetup_details, name="meetup-detail"),
+    path("<slug:slug>", views.meetup_details, name="meetup-detail"),
 ]
