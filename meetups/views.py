@@ -14,11 +14,7 @@ def meetup_details(request: HttpRequest, slug: str):
         return render(
             request,
             "meetups/meetup-detail.html",
-            {
-                "meetup_title": selected_meetup.title,
-                "meetup_description": selected_meetup.description,
-                "meetup_found": True,
-            },
+            {"meetup_found": True, "meetup": selected_meetup},
         )
     except Exception:
         return render(

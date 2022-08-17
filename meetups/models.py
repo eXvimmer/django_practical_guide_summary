@@ -23,6 +23,8 @@ class Meetup(models.Model):
     image = models.ImageField(upload_to="images")  # /uploads/images
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     participants = models.ManyToManyField(Participant, blank=True)
+    organizer_email = models.EmailField()
+    date = models.DateField()
 
     def __str__(self):
         return self.title
