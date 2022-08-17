@@ -1,28 +1,30 @@
 from django.http import HttpRequest
 from django.shortcuts import render
-
-meetups = [
-    {"title": "First Meetup", "location": "New York", "slug": "first-meetup"},
-    {"title": "Second Meetup", "location": "London", "slug": "second-meetup"},
-]
+from .models import Meetup
 
 
 def index(request: HttpRequest):
-    return render(
-        request, "meetups/index.html", {"meetups": meetups, "show_meetups": True}
-    )
+    meetups = Meetup.objects.all()  # type: ignore
+    return render(request, "meetups/index.html", {"meetups": meetups})
 
 
 def meetup_details(request: HttpRequest, slug: str):
-    selected_meetup = {
-        "title": "A selected meetup",
-        "description": "some description about something",
-    }
-    return render(
-        request,
-        "meetups/meetup-detail.html",
-        {
-            "meetup_title": selected_meetup["title"],
-            "meetup_description": selected_meetup["description"],
-        },
-    )
+    try:
+        selected_meetup = Meetup.objects.get(slug=slug)  # type: ignore
+        return render(
+            request,
+            "meetups/meetup-detail.html",
+            {
+                "meetup_title": selected_meetup.title,
+                "meetup_description": selected_meetup.description,
+                "meetup_found": True,
+            },
+        )
+    except Exception:
+        return render(
+            request,
+            "meetups/meetup-detail.html",
+            {
+                "meetup_found": False,
+            },
+        )
