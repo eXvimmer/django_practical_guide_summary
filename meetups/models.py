@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+
+class Meetup(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True, allow_unicode=True)
+    description = models.TextField()
