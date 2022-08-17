@@ -26,7 +26,7 @@
       </section>
       <section id="registration">
         <h2>Join Us!</h2>
-        <form>
+        <form method="post" action="{% url "meetups:meetup-detail" meetup.slug %}">
           {% csrf_token %}
           <ul>
             {{ form.as_ul }}

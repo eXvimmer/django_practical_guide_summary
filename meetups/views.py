@@ -11,8 +11,16 @@ def index(request: HttpRequest):
 
 def meetup_details(request: HttpRequest, slug: str):
     try:
-        registration_form = RegistrationForm()
         selected_meetup = Meetup.objects.get(slug=slug)  # type: ignore
+        if request.method == "GET":
+            registration_form = RegistrationForm()
+        else:
+            registration_form = RegistrationForm(request.POST)
+            if registration_form.is_valid():
+                participant = registration_form.save()
+                selected_meetup.participants.add(participant)
+                # TODO: redirecto to registration confirmation page
+
         return render(
             request,
             "meetups/meetup-detail.html",
